@@ -1,4 +1,7 @@
 import simplejson
+import sys
+
+from MySQLdb.compat import unicode
 from django.shortcuts import render
 from django.shortcuts import  HttpResponse
 # Create your views here.
@@ -6,7 +9,11 @@ from  cmdb import  models
 from django.core import serializers
 from django.core.serializers import serialize,deserialize
 from django.db.models.query import QuerySet
-import json
+import django.utils
+from django.conf import settings
+
+print(sys.getdefaultencoding())
+
 # user_list=[
 #     {"user":"jack","pwd":"abc"},
 #     {"user":"tom","pwd":"123456"},
@@ -69,8 +76,14 @@ def ajax_get_data(request):
     # data=row.toJSON()
     # return HttpResponse(data, content_type="application/json")
 
-    json_data = serializers.serialize("json", models.UserInfo.objects.all())
+    json_data = serializers.serialize("json", models.UserInfor.objects.all(),ensure_ascii=False)
     return HttpResponse(json_data, content_type="application/json")
+## 资讯列表接口
+def newslist(request):
+    if request.method == "POST":
+        newsData=serializers.serialize("json",models.news.objects.all())
+    return  HttpResponse(newsData,content_type='application/json')
+
 
 ##############这个是返回网页#############################
 def index(request):
