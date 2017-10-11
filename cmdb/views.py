@@ -12,7 +12,6 @@ from django.db.models.query import QuerySet
 import django.utils
 from django.conf import settings
 
-print(sys.getdefaultencoding())
 
 # user_list=[
 #     {"user":"jack","pwd":"abc"},
@@ -77,6 +76,7 @@ def ajax_get_data(request):
     # return HttpResponse(data, content_type="application/json")
 
     json_data = serializers.serialize("json", models.UserInfor.objects.all(),ensure_ascii=False)
+    print(json_data)
     return HttpResponse(json_data, content_type="application/json")
 ## 资讯列表接口
 def newslist(request):
