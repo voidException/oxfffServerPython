@@ -1,28 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>index首页</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no" />
+    <title>后台管理系统</title>
 </head>
 <body>
-<h1 style="background-color: white"> 用户输入</h1>
-<div id="vueDjango">
-    <form action="/index/" method="post">
-        <input type="text" name="username" />
-        <input type="password" name="password" />
-        <input type="submit"  value="提交" />
-    </form>
-    <tbody>
-    {%  for line in data %}
-        <tr>
-            <td>{{ line.user }}</td>
-            <td>{{line.pwd}}</td>
-        </tr>
-    {% endfor %}
-    </tbody>
+<div class="wrapper">
+    <h1 style="background-color: white">后台管理系统</h1>
+    <div id="vueDjango" class="loginarea">
+        <form action="/loginaction/" method="post" class="formarea">
+            <div class="loginitem">
+                <div>用户名:</div>
+                 <input type="text" name="username" />
+            </div>
+            <div class="loginitem">
+                <div>密   码:</div>
+                 <input type="password" name="password" />
+            </div>
+            <input type="submit"  value="提交"  class="submit"/>
+        </form>
+    </div>
 </div>
 </body>
 <script src="/static/js/jquery-1.11.1.js"  type="application/javascript"></script>
 <script src="/static/js/vue.js" type="application/javascript"></script>
 <script src="/static/js/index.js" type="application/javascript" ></script>
+<link rel="stylesheet" href="/static/css/index.css">
 </html>

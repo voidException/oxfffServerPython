@@ -1,6 +1,6 @@
+# -*- coding: utf-8 -*-
 import simplejson
 import sys
-
 from MySQLdb.compat import unicode
 from django.shortcuts import render
 from django.shortcuts import  HttpResponse
@@ -11,6 +11,7 @@ from django.core.serializers import serialize,deserialize
 from django.db.models.query import QuerySet
 import django.utils
 from django.conf import settings
+from cmdb.models import Fruit
 
 
 # user_list=[
@@ -75,29 +76,70 @@ def ajax_get_data(request):
     # data=row.toJSON()
     # return HttpResponse(data, content_type="application/json")
 
-    json_data = serializers.serialize("json", models.UserInfor.objects.all(),ensure_ascii=False)
+    #print(models.UserInfor.objects.all())
+    json_data = serializers.serialize("json", models.UserInfor.objects.all())
     print(json_data)
+    #print(json_data[9])
+
     return HttpResponse(json_data, content_type="application/json")
 ## 资讯列表接口
 def newslist(request):
+    newsData={"key":"aaaa"};
     if request.method == "POST":
         newsData=serializers.serialize("json",models.news.objects.all())
+
     return  HttpResponse(newsData,content_type='application/json')
 
 
-##############这个是返回网页#############################
+##############葡萄互助，登录#############################
 def index(request):
     #return HttpResponse("hello  world!")
     #return  render(request,"index.html",)
     #####这儿是获得post传过来的数据
+    Fruit.objects.filter(name="chichi").update(name="chihechihe", price="100")
+    print(request.method)
+    return  render(request,"index.html",{"data":{}})
+
+
+def loginaction(request):
+    user_list = [
+            {"user":"jack","pwd":"abc"},
+            {"user":"tom","pwd":"123456"},
+         ]
+    helpadmin = {}
     if request.method=="POST":
         username=request.POST.get("username",None)
+        #print(username)
         password=request.POST.get("password",None)
-        models.UserInfo.objects.create(user=username,pwd=password)
-        # print(username,password)
-        temp={"user":username,"pwd":password}
-        #user_list.append(temp)
-    user_list=models.UserInfo.objects.all()
+        if(username=="" or password==""):
+            print("aaa")
+            return render(request,"main.html",{"data":user_list}) #重定向到错误页面
+        #使用用户名和密码获取数据库的数据
+        try:
+            helpadmin=models.helpadmin.objects.get(adminname=username)
+            print(helpadmin.adminname)
+            user_list.append( {"user":helpadmin.adminname,"pwd":"123456"})
+            return render(request, "error.html", {"data":{"user":helpadmin.adminname,"pwd":"123456"}})
+            #return render(request, "error.html", helpadmin)
+        except BaseException:
 
-    return  render(request,"index.html",{"data":user_list})
+            print("出错了")
+
+        if helpadmin is None:
+
+            print("bbb")
+            user_list = {"recode": "2001", "msg": "用户名或者密码错误"}
+
+            return render(request, "main.html", {"data": user_list})
+
+    return  render(request,"main.html",{"data":user_list})
+
+
+
+
+
+
+
+
+
 

@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/1.11/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.11/ref/settings/
 """
-
+# -*- coding: utf-8 -*-
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -27,9 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -82,11 +80,12 @@ DATABASES = {
         # 'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
         #'ENGINE': 'django.db.backends.mysql',
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'glove',
+        'NAME': 'facelink',
         'USER': 'root',
-        'PASSWORD': 'cocos2dx$$',
-        'HOST': '101.200.33.138',
+        'PASSWORD': 'lengwenwen',
+        'HOST': '123.57.135.20',
         'PORT': '3306',
+        'CHARSET':'utf8'
     }
 }
 
