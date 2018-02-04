@@ -2,6 +2,7 @@
 import simplejson
 import sys
 from MySQLdb.compat import unicode
+from django.http import JsonResponse
 from django.shortcuts import render
 from django.shortcuts import  HttpResponse
 # Create your views here.
@@ -87,7 +88,6 @@ def newslist(request):
     newsData={"key":"aaaa"};
     if request.method == "POST":
         newsData=serializers.serialize("json",models.news.objects.all())
-
     return  HttpResponse(newsData,content_type='application/json')
 
 
@@ -122,17 +122,18 @@ def loginaction(request):
             return render(request, "error.html", {"data":{"user":helpadmin.adminname,"pwd":"123456"}})
             #return render(request, "error.html", helpadmin)
         except BaseException:
-
             print("出错了")
 
         if helpadmin is None:
-
             print("bbb")
             user_list = {"recode": "2001", "msg": "用户名或者密码错误"}
 
             return render(request, "main.html", {"data": user_list})
+    else:
+        print("GET method")
+        return render(request, "main.html", {"data": user_list})
 
-    return  render(request,"main.html",{"data":user_list})
+
 
 
 

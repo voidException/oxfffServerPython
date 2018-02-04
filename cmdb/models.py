@@ -11,7 +11,21 @@ class Userc(models.Model):
     userPass=models.CharField(max_length=60)
     registerDate=models.DateTimeField('注册日期',default=datetime.timezone.now)
 
+class Tweet(models.Model):
+    tweetid=models.BigAutoField(primary_key=True)
+    tweetuuid=models.CharField(max_length=60)
 
+    class Meta:
+        db_table="tweet"
+
+
+
+class UserAccount(models.Model):
+    id=models.BigAutoField(primary_key=True)
+    accountUUID=models.CharField(max_length=60)
+
+    class Meta:
+        db_table="userAccount"
 # 资讯表
 class news(models.Model):
     id=models.BigAutoField(primary_key=True)
